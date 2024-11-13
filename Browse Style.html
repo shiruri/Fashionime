@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Style – Explore Fashion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0e0b0b;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .navbar a:hover {
+            color: #ccc;
+        }
+        .navbar-links {
+            display: flex;
+            gap: 20px;
+            padding-left: 300px;
+        }
+        .desc-container {
+            padding: 50px 20px;
+            background-color: rgb(37, 34, 34);
+            width: 100%;
+            color: rgb(206, 206, 206);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .heading {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #fff;
+        }
+        .heading h1 {
+            font-size: 30px;
+            font-style: italic;
+            margin-right: 10px;
+        }
+        .heading h2 {
+            font-size: 24px;
+            font-style: italic;
+        }
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .search-input {
+            width: 200px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #0071e3;
+            font-size: 14px;
+            outline: none;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        .main-button {
+            width: 140px;
+            height: 45px;
+            border-radius: 25px;
+            background-color: #262626;
+            color: #ffffff;
+            border: 2px solid #0071e3;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .main-button:hover {
+            background-color: #0071e3;
+            box-shadow: 0 8px 15px rgba(0, 113, 227, 0.3);
+            transform: translateY(-3px);
+        }
+        .subcategory-list {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .subcategory-button {
+            width: 140px;
+            height: 35px;
+            border-radius: 8px;
+            border: none;
+            background-color: #444;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .subcategory-button.active {
+            background-color: #0071e3;
+            color: #fff;
+        }
+        .subcategory-button:hover {
+            background-color: #555;
+        }
+        .filter-counter {
+            font-size: 18px;
+            color: #0071e3;
+            font-weight: bold;
+        }
+        .project-card {
+            width: 200px;
+            height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 15px;
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: top;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            margin-left: 100px;
+        }
+        .project-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .project-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .project-card h3 {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #333;
+        }
+        .project-card p {
+            font-size: 14px;
+            color: #555;
+        }
+        .project-card a {
+            text-decoration: none;
+            color: #0071e3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-links">
+            <a href="index.html">Home</a>
+            <a href="#">Browse Styles</a>
+            <a href="#">Trends</a>
+            <a href="#">My Saved Styles</a>
+            <a href="#">Style Guide</a>
+            <a href="#">Account</a>
+        </div>  
+    </div>
+    <div class="desc-container">
+        <div class="heading">
+            <h1>Styles</h1>
+            <h2>Filters</h2>
+        </div>
+        
+        <!-- Search Bar and Filter Buttons Container -->
+        <div class="search-bar-container">
+            <input type="text" class="search-input" placeholder="Search styles..." oninput="filterProjects()">
+            <div class="button-container">
+                <div>
+                    <button class="main-button" onclick="toggleSubcategories('themeInfluence')">Theme/Influence</button>
+                    <span id="themeInfluenceCounter" class="filter-counter">0</span>
+                </div>
+                <div class="subcategory-list" id="themeInfluence">
+                    <button class="subcategory-button" onclick="toggleSelection(this, 'anime')">Anime</button>
+                    <button class="subcategory-button" onclick="toggleSelection(this, 'streetwear')">Streetwear</button>
+                    <button class="subcategory-button" onclick="toggleSelection(this, 'vintage')">Vintage</button>
+                    <button class="subcategory-button" onclick="toggleSelection(this, 'minimalist')">Minimalist</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div id="project-container">
+            <div class="project-card" data-category="anime" data-color="black" data-gender="unisex">
+                <img src="https://via.placeholder.com/200" alt="Anime Style">
+                <h3>Anime Street Style</h3>
+                <p>Explore the bold world of anime-inspired streetwear.</p>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Naruto</h3>
+                <p>Explore urban street fashion.</p>
+                <a href="naruto.html">Click here</a>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Urban Streetwear</h3>
+                <p>Explore urban street fashion.</p>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Urban Streetwear</h3>
+                <p>Explore urban street fashion.</p>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Urban Streetwear</h3>
+                <p>Explore urban street fashion.</p>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Urban Streetwear</h3>
+                <p>Explore urban street fashion.</p>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Urban Streetwear</h3>
+                <p>Explore urban street fashion.</p>
+            </div>
+            <div class="project-card" data-category="streetwear" data-color="white" data-gender="male">
+                <img src="https://via.placeholder.com/200" alt="Streetwear Style">
+                <h3>Urban Streetwear</h3>
+                <p>Explore urban street fashion.</p>
+            </div>
+            <div class="project-card" data-category="vintage" data-color="red" data-gender="female">
+                <img src="https://via.placeholder.com/200" alt="Vintage Style">
+                <h3>Vintage Style</h3>
+                <p>Discover timeless vintage clothing.</p>
+            </div>
+            <div class="project-card" data-category="minimalist" data-color="blue" data-gender="unisex">
+                <img src="https://via.placeholder.com/200" alt="Minimalist Style">
+                <h3>Minimalist Fashion</h3>
+                <p>Clean lines define minimalist fashion.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const selectedFilters = {
+            themeInfluence: new Set(),
+        };
+
+        function toggleSubcategories(id) {
+            const subcategory = document.getElementById(id);
+            const isVisible = subcategory.style.display === "block";
+            document.querySelectorAll(".subcategory-list").forEach(list => {
+                list.style.display = "none";
+            });
+            subcategory.style.display = isVisible ? "none" : "block";
+        }
+
+        function toggleSelection(button, category) {
+            button.classList.toggle('active');
+            const group = button.parentNode.id;
+
+            if (selectedFilters[group].has(category)) {
+                selectedFilters[group].delete(category);
+            } else {
+                selectedFilters[group].add(category);
+            }
+
+            document.getElementById(`${group}Counter`).innerText = selectedFilters[group].size;
+            filterProjects();
+        }
+
+        function filterProjects() {
+            const searchInput = document.querySelector('.search-input').value.toLowerCase();
+            const projects = document.querySelectorAll('.project-card');
+
+            projects.forEach(project => {
+                const categoryMatch = selectedFilters.themeInfluence.size === 0 || selectedFilters.themeInfluence.has(project.getAttribute('data-category'));
+                const title = project.querySelector('h3').innerText.toLowerCase();
+                const searchMatch = title.includes(searchInput);
+
+                if (categoryMatch && searchMatch) {
+                    project.classList.add('visible');
+                } else {
+                    project.classList.remove('visible');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
